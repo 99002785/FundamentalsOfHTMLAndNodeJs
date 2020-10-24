@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Monitoring System</title>
+
+    <link rel="stylesheet" href="styles/style.css">
+
+    <script src="./scripts/userData.js"></script>
+
+    <script src="./jQuery/jQuery.js"></script>
+    <script>
+        let dataObj = new userManager();
+
+        $(document).ready(function() {
+            $("div").hide();
+            dataObj.addUser(new User(1, "Visvak", "Chennai"));
+            dataObj.addUser(new User(2, "Gopal", "Bhopal"));
+            dataObj.addUser(new User(3, "Alex", "Chandigarh"));
+            dataObj.addUser(new User(4, "Micheal", "Chennai"));
+        })
+
+
+        $(document).ready(function() {
+            $("#add").click(function() {
+                $("#div3").show();
+                $("#div1").hide();
+                $("#div2").hide();
+            })
+
+        })
+
+        $(document).ready(function() {
+            $("#new").click(function() {
+
+
+                let id = $("#newId").val();
+                let name = $("#newName").val();
+                let address = $("#newAddress").val();
+                let user = new User(id, name, address)
+                dataObj.addUser(user);
+                $("#newId").val() = "";
+                $("#newName").val() = "";
+                $("#newAddress").val() = "";
+
+                alert("User added successfully");
+            })
+
+        })
+
+        $(document).ready(function() {
+            $("#fill").click(function() {
+                $("#div1").show();
+                $("#tblRecords").empty();
+                let heading = `<tr><th>User ID</th><th>User Name</th><th>User Address</th>`;
+                $("#tblRecords").append(heading);
+                let data = dataObj.getAll();
+                data.forEach(user => {
+                    let row = `<tr><td>${user.userId}</td><td>${user.userName}</td><td>${user.userAddress}</td>`;
+                    $("#tblRecords").append(row);
+
+
+
+                })
+
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#" id="fill">View All</a>
+            <a href="#" id="add">New User</a>
+        </nav>
+    </header>
+    <section>
+        <div id="div1">
+            <h2>List of Users</h2>
+            <table id="tblRecords" border="1" width="100%">
+
+            </table>
+        </div>
+
+        <div id="div3">
+            <h2>Add the Details of the User</h2>
+            <p>User ID: <input type="number" id="newId"> </p>
+            <p>User Name: <input type="text" id="newName"></p>
+            <p>User Address: <input type="text" id="newAddress"></p>
+            <p><button id="new">Add User</button></p>
+        </div>
+    </section>
+</body>
+
+</html>
